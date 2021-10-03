@@ -76,15 +76,29 @@ public class GameManager : MonoBehaviourPun
 
     public void CheckWinCondition()
     {
-        if (alivePlayersList.Count == 1)
-            photonView.RPC("WinGame", RpcTarget.All, players.First(x => !x.dead).id);
+
+        if (alivePlayers == 1)
+        {
+            int killAmount = 0;
+            string MostKillPlayerName = "";
+            foreach(PlayerController player in players)
+            {
+               if(player.kills > killAmount)
+                {
+                    MostKillPlayerName = player.photonPlayer.NickName;
+                    killAmount = player.kills;
+                }
+            }
+
+            photonView.RPC("WinGame", RpcTarget.All, MostKillPlayerName, killAmount);
+        }
     }
 
     [PunRPC]
-    void WinGame(int winningPlayer)
+    void WinGame(string winningPlayer, int killAmount)
     {
         // set the UI win text
-        GameUI.instance.SetWinText(GetPlayer(winningPlayer).photonPlayer.NickName);
+        GameUI.instance.SetWinText(winningPlayer,killAmount);
 
         Invoke("GoBackToMenu", postGameTime);
     }

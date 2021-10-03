@@ -51,10 +51,10 @@ public class GameUI : MonoBehaviour
         ammoText.text = player.weapon.curAmmo + " / " + player.weapon.maxAmmo;
     }
 
-    public void SetWinText(string winnerName)
+    public void SetWinText(string winnerName, int killAmount)
     {
         winBackground.gameObject.SetActive(true);
-        winText.text = winnerName + " wins!";
+        winText.text = winnerName + " wins with "+killAmount + " kills!";
     }
 
 
@@ -74,14 +74,13 @@ public class GameUI : MonoBehaviour
                 Debug.Log(GameManager.instance.alivePlayersList.Count);
                 //Grabbing the ID of someone to place as hunter List starts at 0...
                 HuntingPlayerId = Random.Range(0, GameManager.instance.alivePlayersList.Count);
-                Debug.Log("HuntingPlayerID :" + HuntingPlayerId + " and contain's argument: " + GameManager.instance.alivePlayersList[HuntingPlayerId]);
-
+                
 
                 //if the person grabbed is alive && not the local player themselves... then assign them.
                 if (GameManager.instance.alivePlayersList[HuntingPlayerId] != PhotonNetwork.LocalPlayer.NickName)
                 {
                     huntText.text = "Hunt: " + GameManager.instance.alivePlayersList[HuntingPlayerId];
-                    Debug.Log("New Player to hunt..." + huntText.text);
+                   
                     HuntedPlayerName = GameManager.instance.alivePlayersList[HuntingPlayerId];
                 }
                 else

@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviourPun
     {
         curHp = 0;
         dead = true;
-        Debug.Log("I have been Killed: " + photonPlayer.NickName + "Function called: "+ FunctionCall);
+      
 
         GameManager.instance.alivePlayers--;
 
