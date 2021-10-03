@@ -124,7 +124,10 @@ public class PlayerController : MonoBehaviourPun
 
         // die if no health left 
         if (curHp <= 0)
-            photonView.RPC("Die", RpcTarget.All);
+        {
+            photonView.RPC("Die", RpcTarget.All, "TakeDamage");
+            Debug.Log("Take Damage has killed:" + photonPlayer.NickName);
+        }
     }
 
     [PunRPC]
@@ -154,10 +157,11 @@ public class PlayerController : MonoBehaviourPun
 
 
     [PunRPC]
-    void Die()
+    void Die(string FunctionCall)
     {
         curHp = 0;
         dead = true;
+        Debug.Log("I have been Killed: " + photonPlayer.NickName + "Function called: "+ FunctionCall);
 
         GameManager.instance.alivePlayers--;
 
@@ -189,7 +193,7 @@ public class PlayerController : MonoBehaviourPun
     {
 
         //A player has died, if this was the hunted, then new target, else wrong person kills the local player
-        Debug.Log(photonPlayer.NickName + " " + KilledPlayerName + "The if statement for kills");
+        Debug.Log(GameUI.instance.HuntedPlayerName + " " + KilledPlayerName + " The if statement for kills");
         if(KilledPlayerName == GameUI.instance.HuntedPlayerName)
         {
             kills++;
@@ -199,7 +203,8 @@ public class PlayerController : MonoBehaviourPun
         }
         else
         {
-            photonView.RPC("Die", RpcTarget.All);
+            GameUI.instance.UpdatePlayerInfoText();
+            GameUI.instance.HuntedText();
         }
 
 

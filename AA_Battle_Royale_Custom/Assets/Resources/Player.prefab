@@ -381,7 +381,7 @@ MonoBehaviour:
   curAmmo: 25
   maxAmmo: 25
   bulletSpeed: 50
-  shootRate: 1
+  shootRate: 0.2
   bulletPrefab: {fileID: 3815142248734065785, guid: d5591106ad84a8147b992804919a0521, type: 3}
   bulletSpawnPos: {fileID: 591251107921821403}
 --- !u!1 &4030415172223184143
